@@ -11,10 +11,11 @@ public class WeatherDataAnalyzer {
 
         System.out.println("\033[1;94m\nWelcome to the Weather Data Analyzer\u001B[0m\n");
 
+        //Instantiating new instances of respective classes
         WeatherDataReader weatherDataReader = new WeatherDataReader();
-        List<WeatherData> weatherDataList = weatherDataReader.parseCSVFile(filePath);
+        List<WeatherData> weatherDataList = weatherDataReader.parseCSVFile(filePath);//Returns list created from reader
 
-        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer(weatherDataList);
+        WeatherAnalyzer weatherAnalyzer = new WeatherAnalyzer(weatherDataList);//Analyzes data from weather data list
 
         DecimalFormat decimalFormat = new DecimalFormat("#.#");
 

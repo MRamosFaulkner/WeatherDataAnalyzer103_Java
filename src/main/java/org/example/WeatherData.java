@@ -52,7 +52,7 @@ public class WeatherData {
         }
     }
 
-    //Getters and Setters - methods that enable you to retrieve values
+    //Getters and Setters - methods that enable you to retrieve values (allows you to access data)
     public String getDate() {
         return date;
     }

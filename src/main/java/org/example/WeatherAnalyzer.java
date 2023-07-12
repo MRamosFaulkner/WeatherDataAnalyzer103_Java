@@ -11,6 +11,7 @@ public class WeatherAnalyzer {
 
     private List<WeatherData> weatherDataList;
 
+    //Constructor - takes in data list
     public WeatherAnalyzer(List<WeatherData> weatherDataList) {
         this.weatherDataList = weatherDataList;
     }
@@ -19,14 +20,15 @@ public class WeatherAnalyzer {
     public double averageTempCalc() {
         double sum = 0;
         int count = 0;
-        for (WeatherData weatherData : weatherDataList) {
+        for (WeatherData weatherData : weatherDataList) { //iterates through the list
            double avgTemp =weatherData.getAvgTemp();
             if (!Double.isNaN(avgTemp) && avgTemp != 0) {
                 sum += avgTemp;
                 count++;
             }
         }
-        return count > 0 ? sum / count : 0.0;
+        //Ternary operator
+        return count > 0 ? sum / count : 0.0;//If data list is not empty, return average
     }
 
 //    public WeatherData getDayWithLowestTemperature() {
@@ -40,7 +42,7 @@ public class WeatherAnalyzer {
 //    }
 
     public WeatherData getDayWithLowestTemperature() {
-        WeatherData lowestTemperatureData = null;//This initializes lowest temp as null
+        WeatherData lowestTemperatureData = null;//This initializes lowest temp as null/nothing, creates a variable to hold data
 
         for (WeatherData weatherData : weatherDataList) {
             double avgTemp = weatherData.getAvgTemp();
@@ -79,7 +81,8 @@ public class WeatherAnalyzer {
                 count++;
             }
         }
-        return count > 0 ? sum / count : 0.0;
+        //Ternary operator
+        return count > 0 ? sum / count : 0.0;//If data list is not empty, return average
     }
 
 
@@ -123,7 +126,8 @@ public class WeatherAnalyzer {
             sum += weatherData.getHumidity();
             count++;
         }
-        return count > 0 ? sum / count : 0.0;
+        //Ternary operator
+        return count > 0 ? sum / count : 0.0;//If data list is not empty, return average
     }
 
     public WeatherData getDayWithLowestHumidity() {
@@ -158,7 +162,8 @@ public class WeatherAnalyzer {
             sum += weatherData.getWindSpeed();
             count++;
         }
-        return count > 0 ? sum / count : 0.0;
+        //Ternary operator
+        return count > 0 ? sum / count : 0.0;//If data list is not empty, return average
     }
 
     public WeatherData getDayWithLowestWindSpeed() {
@@ -192,10 +197,10 @@ public class WeatherAnalyzer {
         double sumMonth2 = 0;
         int countMonth1 = 0;
         int countMonth2 = 0;
-        DateTimeFormatter dateTimeFormatter =DateTimeFormatter.ofPattern("MM-dd-yyy");
+//        DateTimeFormatter dateTimeFormatter =DateTimeFormatter.ofPattern("MM-dd-yyy");
 
         for (WeatherData weatherData : weatherDataList) {
-            String month = weatherData.getDate().substring(0, 2);
+            String month = weatherData.getDate().substring(0, 2);//Goes through each date and grabs month with--first two characters
 
             if (month.equals(month1)) {
                 if (!Double.isNaN(weatherData.getAvgTemp()) && weatherData.getAvgTemp() != 0) {
@@ -222,7 +227,7 @@ public class WeatherAnalyzer {
         DecimalFormat decimalFormat = new DecimalFormat("#");
 
 
-        if (temperatureDifference > 0) {
+        if (temperatureDifference > 0) { //Temp greater than zero
             return getMonthName(month1) + "'s average temperature was " + decimalFormat.format(temperatureDifference) + " degrees higher than " + getMonthName(month2) + "'s.\n";
         } else if (temperatureDifference < 0) {
             return getMonthName(month1) + "'s average temperature was " + decimalFormat.format(Math.abs(temperatureDifference)) + " degrees lower than " + getMonthName(month2) + "'s.\n";
@@ -233,7 +238,7 @@ public class WeatherAnalyzer {
 
 
     private String getMonthName(String month) {
-        // Add a mapping from the month number to its name
+        // Add a mapping from the month number to its name -- switch statement
         switch (month) {
             case "01":
                 return "January";
@@ -273,13 +278,13 @@ public class WeatherAnalyzer {
         StringBuilder heatwavePeriod = new StringBuilder();
 
         for (WeatherData weatherData : weatherDataList) {
-            if (weatherData.getAvgTemp() > temperatureThreshold) {
+            if (weatherData.getAvgTemp() > temperatureThreshold) {//if avgtemp is greater than the threshold
                 if (heatwaveCount == 0) {
                     heatwavePeriod.append(weatherData.getDate());
                 }
-                heatwaveCount++;
+                heatwaveCount++;//Continues to count days until avgtemp is under threshold
             } else {
-                if (heatwaveCount >= consecutiveDays) {
+                if (heatwaveCount >= consecutiveDays) {//If heatwave count is greater than my consecutive days the it is added to the list
                     heatwavePeriod.append(" to ").append(weatherData.getDate());
                     heatwavePeriods.add(heatwavePeriod.toString());
                 }
@@ -305,7 +310,7 @@ public class WeatherAnalyzer {
             if (Double.isNaN(weatherData.getPrecipitation())) {
                 missingData.add(weatherData.getDate() + ": Missing Precipitation");
             }
-            if (Double.isNaN(weatherData.getAvgTemp())) {
+            if (Double.isNaN(weatherData.getAvgTemp()) && weatherData.getAvgTemp() != 0) {
                 missingData.add(weatherData.getDate() + ": AvgTemp value 'Not Available' could not be parsed to a number");
             }
         }

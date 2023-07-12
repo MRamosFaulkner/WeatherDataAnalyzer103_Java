@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WeatherDataReader {
+
     public List<WeatherData> parseCSVFile(String filePath) {
         List<WeatherData> weatherDataList = new ArrayList<>();
 
@@ -15,7 +16,7 @@ public class WeatherDataReader {
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
 
             String line;
-            boolean isFirstLine = true; // Skip the header line
+            boolean isFirstLine = true;
 
             while ((line = bufferedReader.readLine()) != null) {
                 if (isFirstLine) {
@@ -29,7 +30,7 @@ public class WeatherDataReader {
 
                 String avgTempStr = data[1];
                 double avgTemp;
-                if (!avgTempStr.isEmpty() && !avgTempStr.equals("Not Available")) {
+                if (!avgTempStr.isEmpty() && !avgTempStr.equals("Not Available")) { //if it's not empty & not N/A it will parse the data
                     avgTemp = Double.parseDouble(avgTempStr);
                 } else {
                     avgTemp= Double.NaN;//this is for missing data
@@ -55,6 +56,7 @@ public class WeatherDataReader {
 
                 int windSpeed = Integer.parseInt(data[4]);
 
+                //Object that stores weather data info
                 WeatherData weatherData = new WeatherData(date, avgTemp, precipitation, humidity, windSpeed);
                 weatherDataList.add(weatherData);
             }
